@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For MAHAKKK ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  overflow:hidden;
+  background:black;
+  color:white;
+}
+
+/* ===== Background Video (Rotated Landscape) ===== */
+video{
+  position:fixed;
+  top:50%;
+  left:50%;
+  width:100vh;
+  height:100vw;
+  transform:translate(-50%,-50%) rotate(-90deg);
+  object-fit:cover;
+  z-index:-2;
+}
+
+/* Dark Overlay */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  transition:0.5s;
+  z-index:-1;
+}
+
+/* ===== Slides ===== */
+.slide{
+  position:absolute;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+  padding:20px;
+}
+
+.slide.active{
+  display:flex;
+}
+
+h1{
+  font-size:32px;
+  margin-bottom:20px;
+}
+
+p{
+  max-width:600px;
+  margin-bottom:20px;
+  line-height:1.6;
+  font-size:18px;
+}
+
+/* ===== Buttons ===== */
+button{
+  padding:12px 28px;
+  margin:10px;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+#yesBtn{
+  background:#ff4d6d;
+  color:white;
+}
+
+#noBtn{
+  background:#444;
+  color:white;
+  position:absolute;
+}
+
+/* ===== Countdown / Final Message ===== */
+#countdown{
+  margin-top:25px;
+  font-size:20px;
+  font-weight:500;
+  color:#ffd1dc;
+  text-shadow:0 0 10px rgba(255,105,180,0.6);
+}
+
+/* ===== Floating Hearts ===== */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:20px;
+  animation:floatUp 4s linear forwards;
+}
+
+@keyframes floatUp{
+  to{
+    transform:translateY(-110vh);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background -->
+<video autoplay muted loop playsinline>
+  <source src="background.mp4" type="video/mp4">
+</video>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- Music -->
+<audio id="bgMusic">
+  <source src="zaalima.mp3" type="audio/mp3">
+</audio>
+
+<!-- Slide 1 -->
+<div class="slide active" id="slide1">
+  <h1>Ek sawaal ka jawaab doge MAHAKKK ji? 💌</h1>
+  <button onclick="nextSlide(2)">Next</button>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide" id="slide2">
+  <h1>Pakka na bchha? 😏</h1>
+  <button onclick="nextSlide(3)">Haan bolo</button>
+</div>
+
+<!-- Slide 3 -->
+<div class="slide" id="slide3">
+  <h1>I’m in love with you , mahak ji ❤️</h1>
+  <p>
+    not even bluffing.
+I LITERALLY CAN'T EXPLAIN THIS FEELING TO YOU
+main aapke liye boht serious hu and this is no joke cutu
+aap boht ache ho mahak ji , you complete me.
+you're the only one who uncderstands me , who cares for me.
+who explains me everything that is good or bad for me.
+I LOVE YOU SO MUCH MAHAKU<3 , so umm will you be my forever?
+date to marry wala forever? 
+  </p>
+
+  <button id="yesBtn" onclick="sayYes()">Yes</button>
+  <button id="noBtn" onclick="moveNo()">No</button>
+
+  <div id="countdown"></div>
+</div>
+
+<script>
+const music = document.getElementById("bgMusic");
+const overlay = document.getElementById("overlay");
+const noBtn = document.getElementById("noBtn");
+const countdownEl = document.getElementById("countdown");
+
+let musicStarted = false;
+
+/* ===== Slide Switch ===== */
+function nextSlide(num){
+  document.querySelectorAll(".slide").forEach(slide=>{
+    slide.classList.remove("active");
+  });
+
+  document.getElementById("slide"+num).classList.add("active");
+
+  if(!musicStarted){
+    musicStarted = true;
+    music.currentTime = 224; // 3:44 timestamp
+    music.volume = 0;
+    music.play();
+
+    let fade = setInterval(()=>{
+      if(music.volume < 1){
+        music.volume += 0.05;
+      } else {
+        clearInterval(fade);
+      }
+    },200);
+  }
+}
+
+/* ===== Move + Shrink No Button ===== */
+let size = 1;
+
+function moveNo(){
+  size -= 0.1;
+  if(size < 0.3) size = 0.3;
+
+  noBtn.style.transform = "scale("+size+")";
+
+  let x = Math.random() * (window.innerWidth - 100);
+  let y = Math.random() * (window.innerHeight - 50);
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+/* ===== Yes Click ===== */
+function sayYes(){
+  countdownEl.innerHTML = "Send screenshot if you said YES khikhi ❤️";
+
+  if(navigator.vibrate){
+    navigator.vibrate(200);
+  }
+
+  overlay.style.background = "rgba(0,0,0,0.8)";
+  setTimeout(()=>{
+    overlay.style.background = "rgba(0,0,0,0.6)";
+  },800);
+}
+
+/* ===== Floating Hearts (soft) ===== */
+setInterval(()=>{
+  let heart = document.createElement("div");
+  heart.innerHTML = "❤️";
+  heart.classList.add("heart");
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = (Math.random()*20+15)+"px";
+  document.body.appendChild(heart);
+
+  setTimeout(()=>{
+    heart.remove();
+  },4000);
+},800);
+
+/* ===== Countdown ===== */
+let count = 15;
+
+let timer = setInterval(()=>{
+  if(document.getElementById("slide3").classList.contains("active")){
+    countdownEl.innerHTML = "Time left: " + count + "s";
+    count--;
+
+    if(count < 0){
+      clearInterval(timer);
+      countdownEl.innerHTML = "Ab toh sirf YES hi option hai ❤️";
+    }
+  }
+},1000);
+</script>
+
+</body>
+</html>
